@@ -21,13 +21,10 @@ dump(fileUtils:getSearchPaths(), "fileUtils:getSearchPaths")
 print("DTHelper.luac", fileUtils:fullPathForFilename('app/common/DTHelper.luac'))
 ```
 1. 第一次清空应用缓存后运行（模拟刚热更完成时）
-```
-[LUA-print] DTHelper.luac	assets/src/app/common/DTHelper.luac
-```
+> [LUA-print] DTHelper.luac	assets/src/app/common/DTHelper.luac
 2. 第二次大退后运行（模拟已经完成热更新，直接进入游戏）
-```
-[LUA-print] DTHelper.luac	/data/user/0/com.xxx.xxxx/files/legend1.1.0//src/app/common/DTHelper.luac
-```
+> [LUA-print] DTHelper.luac	/data/user/0/com.xxx.xxxx/files/legend1.1.0//src/app/common/DTHelper.luac
+
 第一次测试结果与期望不符，访问的仍然时包内文件路径，猜测**可能是读取路径有缓存**，查看`fullPathForFilename`发现了端倪：[`FileUtils`](https://github.com/cocos2d/cocos2d-x/blob/95e5d868ce5958c0dadfc485bdda52f1bc404fe0/cocos/platform/CCFileUtils.cpp)缓存了文件路径，即便热更新目录已经下载了新文件，依然用的是之前加载的路径
 ```c++
 std::string FileUtils::fullPathForFilename(const std::string &filename) const
