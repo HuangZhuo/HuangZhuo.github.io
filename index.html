@@ -70,7 +70,7 @@
     <article id="post-cocos2dx_reload_scripts_failed" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
     <a href="/2021/07/21/cocos2dx_reload_scripts_failed/" class="article-date">
-  <time class="dt-published" datetime="2021-07-21T01:46:11.800Z" itemprop="datePublished">2021-07-21</time>
+  <time class="dt-published" datetime="2021-07-21T01:49:55.397Z" itemprop="datePublished">2021-07-21</time>
 </a>
     
   </div>
@@ -103,25 +103,28 @@ dump(fileUtils:getSearchPaths(), &quot;fileUtils:getSearchPaths&quot;)
 print(&quot;DTHelper.luac&quot;, fileUtils:fullPathForFilename(&#39;app/common/DTHelper.luac&#39;))
 </code></pre>
 <ol>
-<li>第一次清空应用缓存后运行（模拟刚热更完成时）<pre><code>[LUA-print] DTHelper.luac    assets/src/app/common/DTHelper.luac
-</code></pre>
+<li>第一次清空应用缓存后运行（模拟刚热更完成时）<blockquote>
+<p>[LUA-print] DTHelper.luac    assets/src/app/common/DTHelper.luac</p>
+</blockquote>
 </li>
-<li>第二次大退后运行（模拟已经完成热更新，直接进入游戏）<pre><code>[LUA-print] DTHelper.luac    /data/user/0/com.xxx.xxxx/files/legend1.1.0//src/app/common/DTHelper.luac
-</code></pre>
-第一次测试结果与期望不符，访问的仍然时包内文件路径，猜测<strong>可能是读取路径有缓存</strong>，查看<code>fullPathForFilename</code>发现了端倪：<a target="_blank" rel="noopener" href="https://github.com/cocos2d/cocos2d-x/blob/95e5d868ce5958c0dadfc485bdda52f1bc404fe0/cocos/platform/CCFileUtils.cpp"><code>FileUtils</code></a>缓存了文件路径，即便热更新目录已经下载了新文件，依然用的是之前加载的路径<pre><code class="c++">std::string FileUtils::fullPathForFilename(const std::string &amp;filename) const
-&#123;
- ....
- // Already Cached ?
- auto cacheIter = _fullPathCache.find(filename);
- if(cacheIter != _fullPathCache.end())
- &#123;
-     return cacheIter-&gt;second;
- &#125;
- ....
-&#125;
-</code></pre>
+<li>第二次大退后运行（模拟已经完成热更新，直接进入游戏）<blockquote>
+<p>[LUA-print] DTHelper.luac    /data/user/0/com.xxx.xxxx/files/legend1.1.0//src/app/common/DTHelper.luac</p>
+</blockquote>
 </li>
 </ol>
+<p>第一次测试结果与期望不符，访问的仍然时包内文件路径，猜测<strong>可能是读取路径有缓存</strong>，查看<code>fullPathForFilename</code>发现了端倪：<a target="_blank" rel="noopener" href="https://github.com/cocos2d/cocos2d-x/blob/95e5d868ce5958c0dadfc485bdda52f1bc404fe0/cocos/platform/CCFileUtils.cpp"><code>FileUtils</code></a>缓存了文件路径，即便热更新目录已经下载了新文件，依然用的是之前加载的路径</p>
+<pre><code class="c++">std::string FileUtils::fullPathForFilename(const std::string &amp;filename) const
+&#123;
+    ....
+    // Already Cached ?
+    auto cacheIter = _fullPathCache.find(filename);
+    if(cacheIter != _fullPathCache.end())
+    &#123;
+        return cacheIter-&gt;second;
+    &#125;
+    ....
+&#125;
+</code></pre>
 <h2 id="解决办法"><a href="#解决办法" class="headerlink" title="解决办法"></a>解决办法</h2><p>清理缓存路径后再重载脚本</p>
 <pre><code class="lua">cc.FileUtils:getInstance():purgeCachedEntries()
 -- reload scripts
@@ -130,7 +133,7 @@ print(&quot;DTHelper.luac&quot;, fileUtils:fullPathForFilename(&#39;app/common/D
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2021/07/21/cocos2dx_reload_scripts_failed/" data-id="ckrctrcri0000z9w92hxi8jky" data-title="Cocos2dx脚本热更新后无法重新加载" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2021/07/21/cocos2dx_reload_scripts_failed/" data-id="ckrctw4f30000ymlm4gxf0rat" data-title="Cocos2dx脚本热更新后无法重新加载" class="article-share-link">Share</a>
       
       
       
@@ -145,7 +148,7 @@ print(&quot;DTHelper.luac&quot;, fileUtils:fullPathForFilename(&#39;app/common/D
     <article id="post-hello-world" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
     <a href="/2021/07/21/hello-world/" class="article-date">
-  <time class="dt-published" datetime="2021-07-21T01:46:11.800Z" itemprop="datePublished">2021-07-21</time>
+  <time class="dt-published" datetime="2021-07-21T01:49:55.397Z" itemprop="datePublished">2021-07-21</time>
 </a>
     
   </div>
@@ -181,7 +184,7 @@ print(&quot;DTHelper.luac&quot;, fileUtils:fullPathForFilename(&#39;app/common/D
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2021/07/21/hello-world/" data-id="ckrctrcro0001z9w9cmckgdoa" data-title="Hello World" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2021/07/21/hello-world/" data-id="ckrctw4f90001ymlmgtin82we" data-title="Hello World" class="article-share-link">Share</a>
       
       
       
