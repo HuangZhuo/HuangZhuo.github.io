@@ -70,7 +70,7 @@
     <article id="post-cocos2dx_reload_scripts_failed" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
     <a href="/2021/07/21/cocos2dx_reload_scripts_failed/" class="article-date">
-  <time class="dt-published" datetime="2021-07-21T01:29:56.841Z" itemprop="datePublished">2021-07-21</time>
+  <time class="dt-published" datetime="2021-07-21T01:46:11.800Z" itemprop="datePublished">2021-07-21</time>
 </a>
     
   </div>
@@ -96,9 +96,11 @@
     return require(moduleName)
 end
 </code></pre>
-<p>脚本确实时走了重新加载的，这个机制很简单，一般不会出问题，应该是文件读取的问题，在<code>Cocos2dx</code>中，<code>lua</code>脚本加载会走<code>cocos2dx_lua_loader</code>函数，这个函数决定从<code>moduleName</code>映射到实际文件读取并执行</p>
-<p>于是在热更新完成后，打印<code>DTHelper.lua</code>的全路径</p>
-<pre><code class="lua">print(&quot;DTHelper.luac&quot;, fileUtils:fullPathForFilename(&#39;app/common/DTHelper.luac&#39;))
+<p>脚本确实时走了重新加载的，这个机制很简单，一般不会出问题，应该是文件读取的问题，在<code>Cocos2dx</code>中，<code>lua</code>脚本加载会走<code>cocos2dx_lua_loader</code>函数，这个函数决定从<code>moduleName</code>映射到实际文件读取并执行。在热更新完成后，打印<code>DTHelper.lua</code>的全路径</p>
+<pre><code class="lua">-- test code
+local fileUtils = cc.FileUtils:getInstance()
+dump(fileUtils:getSearchPaths(), &quot;fileUtils:getSearchPaths&quot;)
+print(&quot;DTHelper.luac&quot;, fileUtils:fullPathForFilename(&#39;app/common/DTHelper.luac&#39;))
 </code></pre>
 <ol>
 <li>第一次清空应用缓存后运行（模拟刚热更完成时）<pre><code>[LUA-print] DTHelper.luac    assets/src/app/common/DTHelper.luac
@@ -128,7 +130,7 @@ end
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2021/07/21/cocos2dx_reload_scripts_failed/" data-id="ckrct6fiq00000non1ybv4d0s" data-title="Cocos2dx脚本热更新后无法重新加载" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2021/07/21/cocos2dx_reload_scripts_failed/" data-id="ckrctrcri0000z9w92hxi8jky" data-title="Cocos2dx脚本热更新后无法重新加载" class="article-share-link">Share</a>
       
       
       
@@ -143,7 +145,7 @@ end
     <article id="post-hello-world" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
     <a href="/2021/07/21/hello-world/" class="article-date">
-  <time class="dt-published" datetime="2021-07-21T01:29:56.841Z" itemprop="datePublished">2021-07-21</time>
+  <time class="dt-published" datetime="2021-07-21T01:46:11.800Z" itemprop="datePublished">2021-07-21</time>
 </a>
     
   </div>
@@ -179,7 +181,7 @@ end
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2021/07/21/hello-world/" data-id="ckrct6fiz00010non6teb5x3g" data-title="Hello World" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2021/07/21/hello-world/" data-id="ckrctrcro0001z9w9cmckgdoa" data-title="Hello World" class="article-share-link">Share</a>
       
       
       
