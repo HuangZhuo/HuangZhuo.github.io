@@ -13,10 +13,11 @@ function reload(moduleName)
     return require(moduleName)
 end
 ```
-脚本确实时走了重新加载的，这个机制很简单，一般不会出问题，应该是文件读取的问题，在`Cocos2dx`中，`lua`脚本加载会走`cocos2dx_lua_loader`函数，这个函数决定从`moduleName`映射到实际文件读取并执行
-
-于是在热更新完成后，打印`DTHelper.lua`的全路径
+脚本确实时走了重新加载的，这个机制很简单，一般不会出问题，应该是文件读取的问题，在`Cocos2dx`中，`lua`脚本加载会走`cocos2dx_lua_loader`函数，这个函数决定从`moduleName`映射到实际文件读取并执行。在热更新完成后，打印`DTHelper.lua`的全路径
 ```lua
+-- test code
+local fileUtils = cc.FileUtils:getInstance()
+dump(fileUtils:getSearchPaths(), "fileUtils:getSearchPaths")
 print("DTHelper.luac", fileUtils:fullPathForFilename('app/common/DTHelper.luac'))
 ```
 1. 第一次清空应用缓存后运行（模拟刚热更完成时）
